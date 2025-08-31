@@ -1,13 +1,18 @@
 package com.example.generalparol
 
-import androidx.compose.foundation.clickable
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,8 +28,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -34,16 +37,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.generalparol.ui.theme.GeneralParolTheme
 
 class MainActivity : ComponentActivity() {
@@ -52,12 +54,34 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GeneralParolTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PasswordGeneratorScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                PasswordGeneratorApp()
             }
+        }
+    }
+}
+
+@Composable
+fun PasswordGeneratorApp() {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // фjy
+        Image(
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = "фон",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        // а
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            PasswordGeneratorScreen()
         }
     }
 }
@@ -83,8 +107,10 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
             text = "прпр от генерала пароля!",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
+            color = Color.Red,
             modifier = Modifier.padding(bottom = 24.dp)
         )
+
 
         // выбор длинны
         Row(
@@ -94,7 +120,9 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
             Text(
                 text = "длинна:",
                 fontSize = 14.sp,
-                modifier = Modifier.padding(end = 8.dp)
+                color = Color.Red,
+                modifier = Modifier.padding(bottom = 20.dp)
+
             )
 
             ExposedDropdownMenuBox(
@@ -133,6 +161,7 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
             Text(
                 text = password.ifEmpty { "тут пароль" },
                 fontSize = 18.sp,
+                color = Color.Red,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -178,8 +207,9 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
 
         // тг линк
         Text(
-            text = "Сделано VeroX:",
+            text = "создано VeroX prjct:",
             fontSize = 12.sp,
+            color = Color.Red,
             modifier = Modifier.padding(bottom = 4.dp)
         )
 
@@ -202,10 +232,14 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
     }
 }
 
-// Функция для генерации пароля
 fun generateRandomPassword(length: Int): String {
-    val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_+=*()?&:"
-    return (1..length)
-        .map { characters.random() }
-        .joinToString("")
+    val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_+=*()?&:"
+    val random = java.util.Random()
+    val sb = StringBuilder(length)
+
+    for (i in 0 until length) {
+        sb.append(chars[random.nextInt(chars.length)])
+    }
+
+    return sb.toString()
 }
