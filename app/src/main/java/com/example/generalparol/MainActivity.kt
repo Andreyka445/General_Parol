@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,7 +21,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
@@ -62,10 +65,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun PasswordGeneratorApp() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        // фjy
+    var currentLanguage by remember { mutableStateOf("RU") }
+    val context = LocalContext.current
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Фон
         Image(
             painter = painterResource(id = R.drawable.background),
             contentDescription = "фон",
@@ -73,7 +77,27 @@ fun PasswordGeneratorApp() {
             contentScale = ContentScale.Crop
         )
 
-        // а
+        // Кнопка выбора языка в правом верхнем углу
+        Box(
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.TopEnd)
+                .clickable {
+                    currentLanguage = if (currentLanguage == "RU") "EN" else "RU"
+                }
+                .background(Color.Blue.copy(alpha = 0.8f), CircleShape)
+                .size(48.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = currentLanguage,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+        }
+
+        // Основной контент
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -81,19 +105,46 @@ fun PasswordGeneratorApp() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            PasswordGeneratorScreen()
+            PasswordGeneratorScreen(currentLanguage = currentLanguage)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
+fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifier) {
     var password by remember { mutableStateOf("") }
     var passwordLength by remember { mutableStateOf(12) }
     var isExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val passwordLengths = listOf(4, 6, 8, 12, 16, 20, 24, 32)
+
+    // тексты
+    val texts = if (currentLanguage == "RU") {
+        mapOf(
+            "title" to "прпр от генерала пароля!",
+            "length" to "длинна:",
+            "hint" to "тут пароль",
+            "generate" to "сделать пароль",
+            "copy" to "копировать",
+            "copied" to "скопировал",
+            "generate_first" to "сначала пароль брад",
+            "made_by" to "создано VeroX prjct:",
+            "telegram_error" to "лох"
+        )
+    } else {
+        mapOf(
+            "title" to "hi from general password!",
+            "length" to "length:",
+            "hint" to "your pass will be here",
+            "generate" to "generate",
+            "copy" to "ctrl+v",
+            "copied" to "copied",
+            "generate_first" to "first you need to generate password",
+            "made_by" to "Made by VeroX gacor prjct:",
+            "telegram_error" to "fail"
+        )
+    }
 
     Column(
         modifier = modifier
@@ -102,27 +153,25 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Заголовок
+        // ZZZZZZZZZZZZZZZZZZZZZZZZZZagalovok
         Text(
-            text = "прпр от генерала пароля!",
+            text = texts["title"] ?: "",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Red,
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
-
-        // выбор длинны
+        // vybor dlinny
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 13.dp)
         ) {
             Text(
-                text = "длинна:",
+                text = texts["length"] ?: "",
                 fontSize = 14.sp,
                 color = Color.Red,
                 modifier = Modifier.padding(bottom = 20.dp)
-
             )
 
             ExposedDropdownMenuBox(
@@ -156,10 +205,10 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
             }
         }
 
-        // Поле с паролем
+        // pole for pass
         SelectionContainer {
             Text(
-                text = password.ifEmpty { "тут пароль" },
+                text = password.ifEmpty { texts["hint"] ?: "" },
                 fontSize = 18.sp,
                 color = Color.Red,
                 modifier = Modifier
@@ -171,7 +220,7 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Кнопки
+        // buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -182,7 +231,7 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = "сделать пароль")
+                Text(text = texts["generate"] ?: "")
             }
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -192,14 +241,14 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
                     if (password.isNotEmpty()) {
                         val clipboard = ContextCompat.getSystemService(context, ClipboardManager::class.java)
                         clipboard?.setPrimaryClip(ClipData.newPlainText("password", password))
-                        Toast.makeText(context, "скопировал", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, texts["copied"], Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(context, "сначала пароль брад", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, texts["generate_first"], Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = "копировать")
+                Text(text = texts["copy"] ?: "")
             }
         }
 
@@ -207,7 +256,7 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
 
         // тг линк
         Text(
-            text = "создано VeroX prjct:",
+            text = texts["made_by"] ?: "",
             fontSize = 12.sp,
             color = Color.Red,
             modifier = Modifier.padding(bottom = 4.dp)
@@ -225,7 +274,7 @@ fun PasswordGeneratorScreen(modifier: Modifier = Modifier) {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/Andreyka445real"))
                         context.startActivity(intent)
                     } catch (e: Exception) {
-                        Toast.makeText(context, "лох", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, texts["loh"], Toast.LENGTH_SHORT).show()
                     }
                 }
         )
