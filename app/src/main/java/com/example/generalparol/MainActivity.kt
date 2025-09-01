@@ -282,7 +282,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
 }
 
 fun generateRandomPassword(length: Int): String {
-    val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_+=*()?&:"
+    val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_+=*()?&:0"
     val random = java.util.Random()
     val sb = StringBuilder(length)
 
