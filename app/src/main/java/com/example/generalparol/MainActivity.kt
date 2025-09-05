@@ -80,7 +80,7 @@ fun PasswordGeneratorApp() {
         // кнопка выбор языка
         Box(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(22.dp)
                 .align(Alignment.TopEnd)
                 .clickable {
                     currentLanguage = if (currentLanguage == "RU") "EN" else "RU"
