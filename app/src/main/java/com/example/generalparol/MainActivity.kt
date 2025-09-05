@@ -103,7 +103,7 @@ fun PasswordGeneratorApp() {
                 .fillMaxSize()
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Bottom
         ) {
             PasswordGeneratorScreen(currentLanguage = currentLanguage)
         }
@@ -151,7 +151,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Bottom
     ) {
         // ZZZZZZZZZZZZZZZZZZZZZZZZZZagalovok
         Text(
