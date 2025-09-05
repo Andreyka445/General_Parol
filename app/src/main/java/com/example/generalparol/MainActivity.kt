@@ -77,7 +77,7 @@ fun PasswordGeneratorApp() {
             contentScale = ContentScale.Crop
         )
 
-        // Кнопка выбора языка в правом верхнем углу
+        // кнопка выбор языка
         Box(
             modifier = Modifier
                 .padding(16.dp)
@@ -97,7 +97,7 @@ fun PasswordGeneratorApp() {
             )
         }
 
-        // Основной контент
+        // рснрва
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -126,7 +126,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
             "length" to "длинна:",
             "hint" to "тут пароль",
             "generate" to "сделать пароль",
-            "copy" to "копировать",
+            "copy" to "ctrl+c",
             "copied" to "скопировал",
             "generate_first" to "сначала пароль брад",
             "made_by" to "создано VeroX prjct:",
@@ -141,7 +141,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
             "copy" to "ctrl+c",
             "copied" to "copied",
             "generate_first" to "first you need to generate password",
-            "made_by" to "Made by VeroX gacor prjct:",
+            "made_by" to "made by VeroX gacor prjct:",
             "telegram_error" to "fail"
         )
     }
