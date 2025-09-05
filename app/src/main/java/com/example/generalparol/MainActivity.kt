@@ -85,7 +85,7 @@ fun PasswordGeneratorApp() {
                 .clickable {
                     currentLanguage = if (currentLanguage == "RU") "EN" else "RU"
                 }
-                .background(Color.Blue.copy(alpha = 0.8f), CircleShape)
+                .background(Color.Black.copy(alpha = 0.8f), CircleShape)
                 .size(48.dp),
             contentAlignment = Alignment.Center
         ) {
