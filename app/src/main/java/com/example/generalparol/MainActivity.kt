@@ -138,7 +138,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
             "length" to "length:",
             "hint" to "your pass will be here",
             "generate" to "generate",
-            "copy" to "ctrl+v",
+            "copy" to "ctrl+c",
             "copied" to "copied",
             "generate_first" to "first you need to generate password",
             "made_by" to "Made by VeroX gacor prjct:",
