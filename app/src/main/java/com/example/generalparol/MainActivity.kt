@@ -80,7 +80,7 @@ fun PasswordGeneratorApp() {
         // кнопка выбор языка
         Box(
             modifier = Modifier
-                .padding(22.dp)
+                .padding(24.dp)
                 .align(Alignment.TopEnd)
                 .clickable {
                     currentLanguage = if (currentLanguage == "RU") "EN" else "RU"
@@ -101,7 +101,7 @@ fun PasswordGeneratorApp() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
@@ -158,7 +158,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
             text = texts["title"] ?: "",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Red,
+            color = Color.White,
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
@@ -170,7 +170,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
             Text(
                 text = texts["length"] ?: "",
                 fontSize = 14.sp,
-                color = Color.Red,
+                color = Color.White,
                 modifier = Modifier.padding(bottom = 20.dp)
             )
 
@@ -210,7 +210,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
             Text(
                 text = password.ifEmpty { texts["hint"] ?: "" },
                 fontSize = 18.sp,
-                color = Color.Red,
+                color = Color.White,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
@@ -258,7 +258,7 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
         Text(
             text = texts["made_by"] ?: "",
             fontSize = 12.sp,
-            color = Color.Red,
+            color = Color.White,
             modifier = Modifier.padding(bottom = 4.dp)
         )
 
