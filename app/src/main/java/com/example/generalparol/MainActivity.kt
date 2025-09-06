@@ -101,7 +101,7 @@ fun PasswordGeneratorApp() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(5.dp),
+                .padding(3.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
@@ -230,7 +230,8 @@ fun PasswordGeneratorScreen(currentLanguage: String, modifier: Modifier = Modifi
                     password = generateRandomPassword(passwordLength)
                 },
                 modifier = Modifier.weight(1f)
-            ) {
+
+            ){
                 Text(text = texts["generate"] ?: "")
             }
 
